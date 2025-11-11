@@ -1,0 +1,56 @@
+# =====================
+# Django / Python
+# =====================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.env/
+.env
+
+# Django stuff
+*.log
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+static/
+
+# Pytest / coverage
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+
+# VSCode / JetBrains IDEs
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+*.env
+
+# Migrations (optional — you can comment out if you want to keep them)
+# */migrations/
+# !*/migrations/__init__.py
+
+# =====================
+# Custom project
+# =====================
+# AWS keys or config
+AWSKeys/
+TripForgeKey.pem
