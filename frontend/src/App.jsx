@@ -4,10 +4,12 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import TripInput from "./components/tripInput";
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div>
+      <Navbar />
       <TripInput />
     </div>
   );
