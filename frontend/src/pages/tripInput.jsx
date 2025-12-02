@@ -11,7 +11,7 @@ export default function TripInput() {
   });
 
   const [response, setResponse] = useState(null);
-  const [isSubmitting, setIsSubmitting] = useState(false); // ΝΕΟ STATE: Loading
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -23,7 +23,7 @@ export default function TripInput() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setResponse(null);
-    setIsSubmitting(true); // Ενεργοποίηση Loading
+    setIsSubmitting(true);
 
     const data = {
       destination: formData.destination,
@@ -44,7 +44,7 @@ export default function TripInput() {
       console.error(err);
       setResponse({ error: "Failed to submit trip" });
     } finally {
-      setIsSubmitting(false); // Απενεργοποίηση Loading (είτε επιτυχία είτε αποτυχία)
+      setIsSubmitting(false);
     }
   };
 
@@ -167,7 +167,7 @@ export default function TripInput() {
           </form>
 
           {response && (
-            <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+            <div className="hidden mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
               <pre className="text-sm text-gray-800 overflow-auto">
                 {JSON.stringify(response, null, 2)}
               </pre>
