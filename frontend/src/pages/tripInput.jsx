@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MapPin, Calendar, DollarSign, Loader2 } from "lucide-react"; // Προσθήκη Loader2
+import { MapPin, Calendar, DollarSign, Loader2 } from "lucide-react";
 import background from "../images/background.jpeg";
 
 export default function TripInput() {
