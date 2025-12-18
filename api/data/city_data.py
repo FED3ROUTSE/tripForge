@@ -68,3 +68,37 @@ COUNTRY_TO_CURRENCY = {
     "malaysia": {"code": "MYR", "symbol": "RM", "name": "Malaysian Ringgit"},
     "thailand": {"code": "THB", "symbol": "฿", "name": "Thai Baht"},
 }
+
+
+COUNTRY_TO_PEAK_SEASON = {
+    "france": [(6, 8)],                      # June–August
+    "romania": [(6, 8)],                     # June–August
+    "italy": [(6, 8)],                       # June–August
+    "united kingdom": [(6, 8)],              # June–August
+    "united states": [(6, 8)],               # June–August
+    "australia": [(12, 2)],                  # December–February
+    "united arab emirates": [(11, 3)],       # November–March
+    "japan": [(3, 4), (10, 11)],             # Cherry blossom + autumn
+    "brazil": [(12, 2)],                     # December–February
+    "greece": [(6, 8)],                      # June–August
+    "china": [(4, 5), (9, 10)],              # Spring + Golden Week
+    "germany": [(6, 9)],                     # June–September
+    "egypt": [(10, 3)],                      # October–March
+    "turkey": [(6, 8)],                      # June–August
+    "portugal": [(6, 8)],                    # June–August
+    "russia": [(6, 8)],                      # June–August
+    "india": [(11, 2)],                      # November–February
+    "czech republic": [(6, 9)],               # June–September
+    "south korea": [(4, 6), (9, 10)],         # Spring + autumn
+    "singapore": [(6, 8)],                   # Summer holidays
+    "austria": [(6, 9)],                     # June–September
+    "netherlands": [(4, 9)],                 # Tulips + summer
+    "spain": [(6, 8)],                       # June–August
+    "hungary": [(6, 9)],                     # June–September
+    "vietnam": [(12, 4)],                    # Dry season
+    "mexico": [(12, 4)],                     # Dry season
+    "canada": [(6, 9)],                      # June–September
+    "ireland": [(6, 8)],                     # June–August
+    "malaysia": [(12, 2)],                   # Dry season
+    "thailand": [(11, 2)],                   # Cool & dry
+}

@@ -3,7 +3,7 @@ import json
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlencode
-from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY
+from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON
 
 load_dotenv()
 
@@ -123,3 +123,15 @@ def extract_trip_details(data):
 def get_currencies(city):
     country = CITY_TO_COUNTRY.get(city.lower())
     return COUNTRY_TO_CURRENCY.get(country)
+
+def get_country(city):
+    return CITY_TO_COUNTRY.get(city.lower())
+
+def get_peak_season(city):
+    country = get_country(city)
+    return COUNTRY_TO_PEAK_SEASON.get(country)
+
+def is_month_in_range(month, start, end):
+    if start <= end:
+        return start <= month <= end
+    return month >= start or month <= end

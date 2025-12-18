@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .services import extract_trip_details, get_place_photo, get_city_map_url, get_currencies
+from .services import (
+    extract_trip_details, get_place_photo, get_city_map_url,
+    get_currencies, get_country, get_peak_season, is_month_in_range)
 from datetime import date
 from datetime import datetime
+import pandas as pd
 
 @api_view(["POST"])
 def plan_trip(request):
@@ -34,6 +37,19 @@ def plan_trip(request):
     currency = get_currencies(destination)
     name = currency
     print("Currency:", currency)
+    
+    peak_season = get_peak_season(destination)
+    print("Off season:", peak_season)
+    arrival_date = datetime.strptime(arrival, "%Y-%m-%d")
+    departure_date = datetime.strptime(departure, "%Y-%m-%d")
+    departure_month = departure_date.month
+    arrival_month = arrival_date.month
+    is_peak_season = any(
+    is_month_in_range(arrival_month, start, end)
+    for start, end in peak_season
+    )
+    season_label = "Peak season" if is_peak_season else "Off-peak season"
+    print("Season:", season_label)
 
     return Response({
     "success": True,
@@ -44,7 +60,8 @@ def plan_trip(request):
     "city_map": city_map,
     "duration_days": duration_days,
     "daily_budget": daily_budget,
-    "currency": currency
+    "currency": currency,
+    "season_label": season_label,
 })
     
 
