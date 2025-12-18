@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { MapPin, Calendar, DollarSign, Loader2 } from "lucide-react";
 import background from "../images/background.jpeg";
+import { useNavigate } from "react-router-dom";
+
 
 export default function TripInput() {
   const [formData, setFormData] = useState({
@@ -12,6 +14,8 @@ export default function TripInput() {
 
   const [response, setResponse] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+
 
   const handleChange = (e) => {
     setFormData({
@@ -39,11 +43,16 @@ export default function TripInput() {
         body: JSON.stringify(data),
       });
       const json = await res.json();
+      navigate("/trip-summary", {
+      state: json,
+    });
+      console.log("TripSummary state:", state);
       setResponse(json);
     } catch (err) {
       console.error(err);
       setResponse({ error: "Failed to submit trip" });
     } finally {
+
       setIsSubmitting(false);
     }
   };

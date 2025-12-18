@@ -2,6 +2,8 @@ import requests
 import json
 import os
 from dotenv import load_dotenv
+from urllib.parse import urlencode
+from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY
 
 load_dotenv()
 
@@ -64,16 +66,14 @@ def get_place_photo(place):
         print("No city results found.")
         return
 
-    # Step 2: Get the city's photo reference
     photos = results[0].get("photos")
     if not photos:
         print("No photos available for this city.")
         return
 
     photo_reference = photos[0].get("photo_reference")
-    print("Photo reference found:", photo_reference)
 
-    # Step 3: Download the city photo
+
     photo_url = "https://maps.googleapis.com/maps/api/place/photo"
     photo_params = {
         "maxwidth": 1600,  
@@ -94,5 +94,32 @@ def get_place_photo(place):
         return None
 
 
-photo = get_place_photo("New Delhi")
-print(photo)
+def get_city_map_url(city_name):
+    base_url = "https://maps.googleapis.com/maps/api/staticmap?"
+    params = {
+        "center": city_name,
+        "zoom": 11,
+        "size": "1600x600",
+        "maptype": "roadmap",
+        "key": os.environ.get("GOOGLE_PLACES_API_KEY"),
+    }
+    return base_url + urlencode(params)
+
+
+def extract_trip_details(data):
+    destination = data.get("destination")
+    arrival = data.get("arrival")
+    departure = data.get("departure")
+    budget = data.get("budget")
+
+    return {
+        "destination": destination,
+        "arrival": arrival,
+        "departure": departure,
+        "budget": budget
+    }
+    
+    
+def get_currencies(city):
+    country = CITY_TO_COUNTRY.get(city.lower())
+    return COUNTRY_TO_CURRENCY.get(country)
