@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .services import (
-    extract_trip_details, get_place_photo, get_city_map_url,
+    extract_trip_details, get_place_photo_google, get_city_map_url, get_photo_unsplash,
     get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine)
 from datetime import date
 from datetime import datetime

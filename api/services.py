@@ -8,12 +8,12 @@ from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEA
 load_dotenv()
 
 API_KEY = os.environ.get("GOOGLE_PLACES_API_KEY")
-UNSPLASH_KEY = os.environ.get("UNSPLAH_API_KEY")
+UNSPLASH_KEY = os.environ.get("UNSPLASH_API_KEY")
 UNSPLASH_BASE_URL = "https://api.unsplash.com"
 
 landmark = {
-    "paris": "Eiffel Tower best view",
-    "bucharest": "the colossal Palace of Parliament",
+    "paris": "Eiffel Tower",
+    "bucharest": "the Palace of Parliament of Bucharest",
     "rome": "Colosseum of rome best picture",
     "london": "Big ben best picture",
     "new york": "Statue of Liberty best view",
@@ -49,7 +49,7 @@ landmark = {
     "bangkok": "Wat Arun best view",
 }
 
-def get_place_photo(place):
+def get_place_photo_google(place):
     
     normalized_place = place.lower().strip()
     query = landmark.get(normalized_place)
@@ -94,6 +94,7 @@ def get_place_photo(place):
     else:
         print(f"Photo API Error: HTTP {photo_response.status_code}")
         return None
+
 
 
 def get_city_map_url(city_name):
@@ -143,3 +144,83 @@ def get_attractions(country):
 
 def get_local_cuisine(country):
     return COUNTRY_TO_LOCAL_CUISINE.get(country, [])
+
+def get_photo_unsplash(query):
+    
+    url = f"{UNSPLASH_BASE_URL}/search/photos"
+    params = {
+        "query": query,
+        "per_page": 1,
+        "orientation": "landscape",
+        "client_id": UNSPLASH_KEY,
+    }
+
+    response = requests.get(url, params=params, timeout=5)
+    response.raise_for_status()
+
+    data = response.json()
+    if data["results"]:
+        return data["results"][0]["urls"]["regular"]
+
+    return None
+
+def get_food_photo(food):
+    
+    food = food.strip().lower()
+    url = f"{UNSPLASH_BASE_URL}/search/photos"
+    params = {
+        "query": f"{food} close-up food photography, natural light, professional",
+        "per_page": 1,
+        "orientation": "landscape",
+        "client_id": UNSPLASH_KEY,
+    }
+
+    response = requests.get(url, params=params, timeout=5)
+    response.raise_for_status()
+
+    data = response.json()
+    if data["results"]:
+        return data["results"][0]["urls"]["regular"]
+
+    return None
+
+
+def get_city_photo(city):
+    
+    city = city.strip().lower()
+    url = f"{UNSPLASH_BASE_URL}/search/photos"
+    params = {
+        "query" : f"{city} cityscape panoramic wide angle modern daytime color photography skyline realistic",
+        "per_page": 1,
+        "orientation": "landscape",
+        "client_id": UNSPLASH_KEY,
+    }
+
+    response = requests.get(url, params=params, timeout=5)
+    response.raise_for_status()
+
+    data = response.json()
+    if data["results"]:
+        return data["results"][0]["urls"]["regular"]
+
+    return None
+
+def get_attraction_photo(attraction):
+    
+    attraction = attraction.strip().lower()
+    url = f"{UNSPLASH_BASE_URL}/search/photos"
+    params = {
+        "query" : f"{attraction} landmark full view wide angle daytime travel photography realistic",
+        "per_page": 1,
+        "orientation": "landscape",
+        "client_id": UNSPLASH_KEY,
+    }
+
+    response = requests.get(url, params=params, timeout=5)
+    response.raise_for_status()
+
+    data = response.json()
+    if data["results"]:
+        return data["results"][0]["urls"]["regular"]
+
+    return None
