@@ -3,7 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .services import (
     extract_trip_details, get_place_photo, get_city_map_url,
-    get_currencies, get_country, get_peak_season, is_month_in_range)
+    get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine)
 from datetime import date
 from datetime import datetime
 import pandas as pd
@@ -38,6 +38,8 @@ def plan_trip(request):
     name = currency
     print("Currency:", currency)
     
+    country = get_country(destination)
+    
     peak_season = get_peak_season(destination)
     print("Off season:", peak_season)
     arrival_date = datetime.strptime(arrival, "%Y-%m-%d")
@@ -51,6 +53,9 @@ def plan_trip(request):
     season_label = "Peak season" if is_peak_season else "Off-peak season"
     print("Season:", season_label)
 
+    attractions = get_attractions(country)
+    local_cuisine = get_local_cuisine(country)
+    
     return Response({
     "success": True,
     "destination": destination,
@@ -62,6 +67,8 @@ def plan_trip(request):
     "daily_budget": daily_budget,
     "currency": currency,
     "season_label": season_label,
+    "attractions": attractions,
+    "local_cuisine": local_cuisine,
 })
     
 

@@ -3,11 +3,13 @@ import json
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlencode
-from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON
+from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS, COUNTRY_TO_LOCAL_CUISINE
 
 load_dotenv()
 
 API_KEY = os.environ.get("GOOGLE_PLACES_API_KEY")
+UNSPLASH_KEY = os.environ.get("UNSPLAH_API_KEY")
+UNSPLASH_BASE_URL = "https://api.unsplash.com"
 
 landmark = {
     "paris": "Eiffel Tower best view",
@@ -135,3 +137,9 @@ def is_month_in_range(month, start, end):
     if start <= end:
         return start <= month <= end
     return month >= start or month <= end
+
+def get_attractions(country):
+    return COUNTRY_TO_POPULAR_ATTRACTIONS.get(country, [])
+
+def get_local_cuisine(country):
+    return COUNTRY_TO_LOCAL_CUISINE.get(country, [])
