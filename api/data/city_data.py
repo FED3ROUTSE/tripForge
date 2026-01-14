@@ -34,6 +34,7 @@ CITY_TO_COUNTRY = {
     "dublin": "ireland",
     "kuala lumpur": "malaysia",
     "bangkok": "thailand",
+    "krakow": "poland"
 }
 
 COUNTRY_TO_CURRENCY = {
@@ -67,6 +68,8 @@ COUNTRY_TO_CURRENCY = {
     "ireland": {"code": "EUR", "symbol": "€", "name": "Euro"},
     "malaysia": {"code": "MYR", "symbol": "RM", "name": "Malaysian Ringgit"},
     "thailand": {"code": "THB", "symbol": "฿", "name": "Thai Baht"},
+    "poland": {"code": "PLN", "symbol": "zł", "name": "Polish Zloty"},
+
 }
 
 
@@ -101,6 +104,8 @@ COUNTRY_TO_PEAK_SEASON = {
     "ireland": [(6, 8)],                     # June–August
     "malaysia": [(12, 2)],                   # Dry season
     "thailand": [(11, 2)],                   # Cool & dry
+    "poland": [(5, 9)],   # May–September
+
 }
 
 COUNTRY_TO_POPULAR_ATTRACTIONS = {
@@ -134,6 +139,12 @@ COUNTRY_TO_POPULAR_ATTRACTIONS = {
     "ireland": ["Cliffs of Moher", "Dublin Castle", "Ring of Kerry"],
     "malaysia": ["Petronas Towers", "Batu Caves", "Langkawi"],
     "thailand": ["Grand Palace", "Phi Phi Islands", "Wat Arun"],
+    "poland": [
+    "Wawel Castle",
+    "Auschwitz-Birkenau Memorial",
+    "Old Town Square (Krakow)"
+],
+
 }
 
 
@@ -168,4 +179,10 @@ COUNTRY_TO_LOCAL_CUISINE = {
     "ireland": ["Irish Stew", "Soda Bread", "Boxty"],
     "malaysia": ["Nasi Lemak", "Satay", "Rendang"],
     "thailand": ["Pad Thai", "Green Curry", "Tom Yum Soup"],
+    "poland": [
+    "Pierogi",
+    "Bigos",
+    "Żurek"
+],
+
 }

@@ -2,8 +2,9 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .services import (
-    extract_trip_details, get_place_photo_google, get_city_map_url, get_photo_unsplash,
-    get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine)
+    extract_trip_details, get_place_photo_google, get_city_map_url, get_photo_unsplash, get_city_photo,
+    get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine,
+    get_attraction_photo, get_food_photo,)
 from datetime import date
 from datetime import datetime
 import pandas as pd
@@ -23,7 +24,7 @@ def plan_trip(request):
     print("Budget:", budget)
     
     city_map = get_city_map_url(destination)
-    photo_url = get_place_photo(destination)
+    photo_url = get_place_photo_google(destination)
     
     
     d1 = datetime.strptime(departure, "%Y-%m-%d")
@@ -55,6 +56,26 @@ def plan_trip(request):
 
     attractions = get_attractions(country)
     local_cuisine = get_local_cuisine(country)
+    attraction_photos = []
+    food_photos = []
+
+    for attraction in attractions:
+        photo = get_attraction_photo(attraction)
+        if photo:
+            attraction_photos.append(photo)
+
+    for food in local_cuisine:
+        photo = get_food_photo(food)
+        if photo:
+            food_photos.append(photo)
+        
+    city_photo = get_city_photo(destination)
+    
+    print("City photo ULR", city_photo)
+    print("Attractions photo ULR",attraction_photos)
+    print("Food photo ULR",food_photos)
+
+    
     
     return Response({
     "success": True,
@@ -67,8 +88,7 @@ def plan_trip(request):
     "daily_budget": daily_budget,
     "currency": currency,
     "season_label": season_label,
-    "attractions": attractions,
-    "local_cuisine": local_cuisine,
+    "city_photo": city_photo,  
 })
     
 
