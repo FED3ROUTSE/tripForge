@@ -56,18 +56,18 @@ def plan_trip(request):
 
     attractions = get_attractions(country)
     local_cuisine = get_local_cuisine(country)
-    attraction_photos = []
-    food_photos = []
+    attraction_photos = {}
+    food_photos = {}
 
     for attraction in attractions:
         photo = get_attraction_photo(attraction)
         if photo:
-            attraction_photos.append(photo)
+            attraction_photos[attraction] = photo
 
     for food in local_cuisine:
         photo = get_food_photo(food)
         if photo:
-            food_photos.append(photo)
+            food_photos[food] = photo
         
     city_photo = get_city_photo(destination)
     
@@ -89,6 +89,8 @@ def plan_trip(request):
     "currency": currency,
     "season_label": season_label,
     "city_photo": city_photo,  
+    "food_photos": food_photos,
+    "attraction_photos": attraction_photos,
 })
     
 

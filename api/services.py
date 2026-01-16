@@ -180,7 +180,13 @@ def get_food_photo(food):
 
     data = response.json()
     if data["results"]:
-        return data["results"][0]["urls"]["regular"]
+        photo = data["results"][0]
+        return {
+        "url": photo["urls"]["regular"],
+        "author": photo["user"]["name"],
+        "username": photo["user"]["username"],
+        "link": photo["links"]["html"],
+    }
 
     return None
 
@@ -201,7 +207,13 @@ def get_city_photo(city):
 
     data = response.json()
     if data["results"]:
-        return data["results"][0]["urls"]["regular"]
+        photo = data["results"][0]
+        return {
+        "url": photo["urls"]["regular"],
+        "author": photo["user"]["name"],
+        "username": photo["user"]["username"],
+        "link": photo["links"]["html"],
+    }
 
     return None
 
@@ -221,6 +233,12 @@ def get_attraction_photo(attraction):
 
     data = response.json()
     if data["results"]:
-        return data["results"][0]["urls"]["regular"]
+        photo = data["results"][0]
+        return {
+        "url": photo["urls"]["regular"],
+        "author": photo["user"]["name"],
+        "username": photo["user"]["username"],
+        "link": photo["links"]["html"],
+    }
 
     return None
