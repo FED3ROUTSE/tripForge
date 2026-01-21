@@ -47,6 +47,9 @@ export default function TripSummary() {
     );
   }
 
+  // UTM parameters for Unsplash compliance
+  const utm = "?utm_source=TripForge&utm_medium=referral";
+
   return (
     <div className="relative min-h-screen w-full bg-gray-50 pt-24 px-4">
       {/* BACKGROUND IMAGE */}
@@ -97,7 +100,7 @@ export default function TripSummary() {
                 <InfoRow
                   icon={<DollarSign />}
                   label="Daily Budget"
-                  value={`£${state.daily_budget}/day`}
+                  value={`£${state.format_budget}/day`}
                 />
                 <InfoRow
                   icon={<DollarSign />}
@@ -121,8 +124,7 @@ export default function TripSummary() {
               onClick={() =>
                 document
                   .getElementById("quick-facts")
-                  ?.scrollIntoView({ behavior: "smooth", 
-                  })
+                  ?.scrollIntoView({ behavior: "smooth" })
               }
               className="group flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white shadow-sm text-black text-sm font-medium hover:shadow-md transition"
             >
@@ -132,54 +134,48 @@ export default function TripSummary() {
           </div>
         </FadeInSection>
 
-        {/* QUICK FACTS */}
-        <div
-          className="relative z-10 max-w-6xl mx-auto mt-72 pb-24"
-        >
+        {/* QUICK FACTS SECTION */}
+        <div className="relative z-10 max-w-6xl mx-auto mt-72 pb-24" id="quick-facts">
           {/* CITY HERO */}
-{state.city_photo && (
-  <FadeInSection>
-    <div className="mb-16">
-      <div className="relative overflow-hidden rounded-2xl shadow-xl">
-
-        {/* IMAGE */}
-        <img
-          src={state.city_photo.url}
-          alt={state.destination}
-          className="w-full h-[420px] object-cover"
-        />
-
-        {/* Dark overlay for title */}
-        <div className="absolute inset-0 bg-black/30 flex items-end">
-          <h3 className="text-white text-3xl font-semibold p-6">
-            {state.destination}
-          </h3>
-        </div>
-
-        {/* Attribution bar — attached to bottom */}
-        <div className="absolute bottom-0 left-0 w-full px-4 py-2 flex justify-end rounded-b-2xl">
-          <a
-            href={state.city_photo.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-white hover:text-gray-200 transition"
-          >
-            Photo by {state.city_photo.author} on Unsplash
-          </a>
-        </div>
-
+          {state.city_photo && (
+            <FadeInSection>
+  <div className="mb-16">
+    <div className="relative overflow-hidden rounded-t-2xl shadow-xl">
+      {/* IMAGE */}
+      <img
+        src={state.city_photo.url}
+        alt={state.destination}
+        className="w-full h-[420px] object-cover"
+      />
+      {/* Dark overlay for title only */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
+        <h3 className="text-white text-3xl font-semibold p-6">
+          {state.destination}
+        </h3>
       </div>
     </div>
-  </FadeInSection>
-)}
-
+    
+    {/* Attribution bar MOVED below the image */}
+    <div className="bg-white border-t border-gray-100 px-4 py-2 flex justify-end rounded-b-2xl shadow-md">
+      <p className="text-[11px] text-gray-500">
+        Photo by{" "}
+        <a href={`https://unsplash.com/@${state.city_photo.username}${utm}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-black">
+          {state.city_photo.author}
+        </a> on <a href={`https://unsplash.com/${utm}`} target="_blank" rel="noopener noreferrer" className="underline hover:text-black">
+          Unsplash
+        </a>
+      </p>
+    </div>
+  </div>
+</FadeInSection>
+          )}
 
           {/* ATTRACTIONS */}
           <Section title="Popular Attractions">
             {Object.entries(state.attraction_photos).map(
               ([name, photo], index) => (
                 <FadeInSection key={name} delay={index * 120}>
-                  <PhotoCard title={name} photo={photo} />
+                  <PhotoCard title={name} photo={photo} utm={utm} />
                 </FadeInSection>
               )
             )}
@@ -190,7 +186,7 @@ export default function TripSummary() {
             {Object.entries(state.food_photos).map(
               ([name, photo], index) => (
                 <FadeInSection key={name} delay={index * 120}>
-                  <PhotoCard title={name} photo={photo} />
+                  <PhotoCard title={name} photo={photo} utm={utm} />
                 </FadeInSection>
               )
             )}
@@ -228,31 +224,43 @@ function Section({ title, children }) {
   );
 }
 
-function PhotoCard({ title, photo }) {
+function PhotoCard({ title, photo, utm }) {
   return (
-    <div className="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition">
+    <div className="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition flex flex-col h-full">
       <img
         src={photo.url}
         alt={title}
         className="w-full h-52 object-cover"
       />
-      <div className="p-4">
+      <div className="p-4 flex-grow">
         <h4 className="text-lg font-medium text-gray-800">{title}</h4>
-        <Attribution photo={photo} />
+        <Attribution photo={photo} utm={utm} />
       </div>
     </div>
   );
 }
 
-function Attribution({ photo }) {
+function Attribution({ photo, utm }) {
   return (
-    <a
-      href={photo.link}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block mt-2 text-xs text-gray-500 hover:text-gray-700"
-    >
-      Photo by {photo.author} on Unsplash
-    </a>
+    <p className="mt-2 text-[10px] text-gray-500 italic">
+      Photo by{" "}
+      <a
+        href={`https://unsplash.com/@${photo.username}${utm}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline hover:text-gray-800 transition"
+      >
+        {photo.author}
+      </a>{" "}
+      on{" "}
+      <a
+        href={`https://unsplash.com/${utm}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline hover:text-gray-800 transition"
+      >
+        Unsplash
+      </a>
+    </p>
   );
 }

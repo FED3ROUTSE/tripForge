@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import TripInput from "./pages/tripInput";
 import TripSummary from "./pages/TripSummary";
+import TravelStyle from "./pages/travelStyle";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<TripInput />} />
         <Route path="/trip-summary" element={<TripSummary />} />
+        <Route path="/travel-style" element = {<TravelStyle />} />
       </Routes>
     </Router>
   );

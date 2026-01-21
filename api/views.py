@@ -33,7 +33,8 @@ def plan_trip(request):
     print("Duration in days:", duration_days)
     
     daily_budget = budget/duration_days
-    print(f"Daily budget: {daily_budget:.2f}")
+    format_budget = f"{daily_budget:.2f}"
+    print(f"Daily budget: {format_budget}")
     
     currency = get_currencies(destination)
     name = currency
@@ -85,7 +86,7 @@ def plan_trip(request):
     "budget": budget,
     "city_map": city_map,
     "duration_days": duration_days,
-    "daily_budget": daily_budget,
+    "format_budget": format_budget,
     "currency": currency,
     "season_label": season_label,
     "city_photo": city_photo,  
