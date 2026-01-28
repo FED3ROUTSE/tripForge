@@ -1,6 +1,13 @@
 import { useLocation } from "react-router-dom";
 import { MapPin, Calendar, DollarSign, Clock, SunSnow, ArrowDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+
+
+
+
+
 
 function FadeInSection({ children, delay = 0 }) {
   const ref = useRef(null);
@@ -37,6 +44,14 @@ function FadeInSection({ children, delay = 0 }) {
 }
 
 export default function TripSummary() {
+  const [response, setResponse] = useState(null);
+  const navigate = useNavigate();
+
+
+const handleNext = (e) => {
+    navigate("/travel-style") 
+  }
+
   const { state } = useLocation();
 
   if (!state) {
@@ -135,7 +150,7 @@ export default function TripSummary() {
         </FadeInSection>
 
         {/* QUICK FACTS SECTION */}
-        <div className="relative z-10 max-w-6xl mx-auto mt-72 pb-24" id="quick-facts">
+        <div className="relative z-10 max-w-6xl mx-auto mt-24 pb-24" id="quick-facts">
           {/* CITY HERO */}
           {state.city_photo && (
             <FadeInSection>
@@ -191,6 +206,23 @@ export default function TripSummary() {
               )
             )}
           </Section>
+            <FadeInSection delay={200}>
+  <div className="flex justify-center mt-12">
+    <button
+  type="button"
+  onClick = {handleNext}
+  className="group flex items-center gap-2 px-6 py-3 rounded-xl
+           bg-[#527a7a] text-white text-sm font-medium
+           hover:bg-[#446565] transition
+           shadow-md hover:shadow-lg"
+
+>
+  <span>Continue to Travel Style</span>
+</button>
+
+  </div>
+</FadeInSection>
+
         </div>
       </div>
     </div>

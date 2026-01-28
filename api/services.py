@@ -169,7 +169,7 @@ def get_food_photo(food):
     food = food.strip().lower()
     url = f"{UNSPLASH_BASE_URL}/search/photos"
     params = {
-        "query": f"{food} close-up food photography, natural light, professional",
+        "query": f"{food} authentic close-up food photography, natural light, professional",
         "per_page": 1,
         "orientation": "landscape",
         "client_id": UNSPLASH_KEY,

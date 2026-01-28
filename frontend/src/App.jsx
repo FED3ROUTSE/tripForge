@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import TripInput from "./pages/tripInput";
+import TripInput from "./pages/TripInput";
 import TripSummary from "./pages/TripSummary";
-import TravelStyle from "./pages/travelStyle";
+import TravelStyle from "./pages/TravelStyle";
 import Navbar from "./components/Navbar";
 
 function App() {
