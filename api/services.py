@@ -121,6 +121,13 @@ def extract_trip_details(data):
         "departure": departure,
         "budget": budget
     }
+
+def extract_travel_style(data):
+    travel_style = data.get("travelStyle")
+    
+    return {
+        "travel_style": travel_style,
+    }
     
     
 def get_currencies(city):

@@ -1,4 +1,9 @@
+# =======================
+# CITY → COUNTRY
+# =======================
+
 CITY_TO_COUNTRY = {
+    # Original
     "paris": "france",
     "bucharest": "romania",
     "rome": "italy",
@@ -34,8 +39,68 @@ CITY_TO_COUNTRY = {
     "dublin": "ireland",
     "kuala lumpur": "malaysia",
     "bangkok": "thailand",
-    "krakow": "poland"
+    "krakow": "poland",
+
+    # Added Europe
+    "barcelona": "spain",
+    "milan": "italy",
+    "florence": "italy",
+    "venice": "italy",
+    "naples": "italy",
+    "munich": "germany",
+    "zurich": "switzerland",
+    "geneva": "switzerland",
+    "brussels": "belgium",
+    "edinburgh": "united kingdom",
+    "manchester": "united kingdom",
+    "reykjavik": "iceland",
+    "stockholm": "sweden",
+    "oslo": "norway",
+    "copenhagen": "denmark",
+    "helsinki": "finland",
+
+    # Americas
+    "miami": "united states",
+    "las vegas": "united states",
+    "chicago": "united states",
+    "boston": "united states",
+    "san diego": "united states",
+    "vancouver": "canada",
+    "montreal": "canada",
+    "quebec city": "canada",
+    "buenos aires": "argentina",
+    "lima": "peru",
+
+    # Asia
+    "hong kong": "hong kong",
+    "taipei": "taiwan",
+    "osaka": "japan",
+    "kyoto": "japan",
+    "phuket": "thailand",
+    "chiang mai": "thailand",
+    "bali": "indonesia",
+    "jakarta": "indonesia",
+    "manila": "philippines",
+    "ho chi minh city": "vietnam",
+
+    # Middle East & Africa
+    "doha": "qatar",
+    "riyadh": "saudi arabia",
+    "marrakech": "morocco",
+    "casablanca": "morocco",
+    "cape town": "south africa",
+    "johannesburg": "south africa",
+
+    # Oceania
+    "melbourne": "australia",
+    "auckland": "new zealand",
+    "queenstown": "new zealand",
 }
+
+
+# =======================
+# COUNTRY → CURRENCY
+# =======================
 
 COUNTRY_TO_CURRENCY = {
     "france": {"code": "EUR", "symbol": "€", "name": "Euro"},
@@ -70,8 +135,24 @@ COUNTRY_TO_CURRENCY = {
     "thailand": {"code": "THB", "symbol": "฿", "name": "Thai Baht"},
     "poland": {"code": "PLN", "symbol": "zł", "name": "Polish Zloty"},
 
+    # Added
+    "switzerland": {"code": "CHF", "symbol": "CHF", "name": "Swiss Franc"},
+    "belgium": {"code": "EUR", "symbol": "€", "name": "Euro"},
+    "iceland": {"code": "ISK", "symbol": "kr", "name": "Icelandic Króna"},
+    "sweden": {"code": "SEK", "symbol": "kr", "name": "Swedish Krona"},
+    "norway": {"code": "NOK", "symbol": "kr", "name": "Norwegian Krone"},
+    "denmark": {"code": "DKK", "symbol": "kr", "name": "Danish Krone"},
+    "finland": {"code": "EUR", "symbol": "€", "name": "Euro"},
+    "argentina": {"code": "ARS", "symbol": "$", "name": "Argentine Peso"},
+    "peru": {"code": "PEN", "symbol": "S/", "name": "Peruvian Sol"},
+    "indonesia": {"code": "IDR", "symbol": "Rp", "name": "Indonesian Rupiah"},
+    "philippines": {"code": "PHP", "symbol": "₱", "name": "Philippine Peso"},
+    "qatar": {"code": "QAR", "symbol": "ر.ق", "name": "Qatari Riyal"},
+    "saudi arabia": {"code": "SAR", "symbol": "﷼", "name": "Saudi Riyal"},
+    "morocco": {"code": "MAD", "symbol": "د.م.", "name": "Moroccan Dirham"},
+    "south africa": {"code": "ZAR", "symbol": "R", "name": "South African Rand"},
+    "new zealand": {"code": "NZD", "symbol": "$", "name": "New Zealand Dollar"},
 }
-
 
 COUNTRY_TO_PEAK_SEASON = {
     "france": [(6, 8)],                      # June–August

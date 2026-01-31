@@ -7,6 +7,7 @@ export default function TravelStyle() {
 
   const [selectedStyles, setSelectedStyles] = useState([]);
 
+
   const styles = [
     {
       id: "relaxed",
@@ -48,11 +49,34 @@ export default function TravelStyle() {
     );
   };
 
-  const handleContinue = () => {
+  const [response, setResponse] = useState(null);
+  const data = {
+    travelStyle: selectedStyles,
+  }
+
+  const handleContinue = async () => {
     // Later you’ll pass selectedStyles to backend / next page
-    console.log("Selected travel styles:", selectedStyles);
-    // navigate("/next-page");
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/plan-style/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json();
+      navigate("", {
+      state: json,
+      
+    });
+      console.log("Selected travel styles:", selectedStyles);
+      setResponse(json);
+    } catch (err) {
+      console.error(err);
+      setResponse({ error: "Failed to submit trip" });
+    }
   };
+
+
+  
 
   return (
     <div className="min-h-screen bg-[#ac7339]/10 pt-28 px-4">

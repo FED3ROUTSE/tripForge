@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .services import (
-    extract_trip_details, get_place_photo_google, get_city_map_url, get_photo_unsplash, get_city_photo,
+    extract_trip_details, extract_travel_style, get_place_photo_google, get_city_map_url, get_photo_unsplash, get_city_photo,
     get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine,
     get_attraction_photo, get_food_photo,)
 from datetime import date
@@ -93,6 +93,16 @@ def plan_trip(request):
     "food_photos": food_photos,
     "attraction_photos": attraction_photos,
 })
+    
+@api_view(["POST"])
+def plan_style(request):
+    
+    data = request.data
+    travel_style = extract_travel_style(data)
+    print("Travel Style:", travel_style)
+    return Response({
+        
+    })
     
 
 
