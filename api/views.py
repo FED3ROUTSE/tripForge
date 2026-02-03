@@ -57,6 +57,9 @@ def plan_trip(request):
 
     attractions = get_attractions(country)
     local_cuisine = get_local_cuisine(country)
+    
+    print("Local Cuisine:", local_cuisine)
+    print("Popular attractions:", attractions)
     attraction_photos = {}
     food_photos = {}
 

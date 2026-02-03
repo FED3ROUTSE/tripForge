@@ -176,7 +176,7 @@ def get_food_photo(food):
     food = food.strip().lower()
     url = f"{UNSPLASH_BASE_URL}/search/photos"
     params = {
-        "query": f"{food} authentic close-up food photography, natural light, professional",
+        "query": f"{food}",
         "per_page": 1,
         "orientation": "landscape",
         "client_id": UNSPLASH_KEY,
@@ -195,7 +195,7 @@ def get_food_photo(food):
         "link": photo["links"]["html"],
     }
 
-    return None
+    return print("Photo not found")
 
 
 def get_city_photo(city):
@@ -203,7 +203,7 @@ def get_city_photo(city):
     city = city.strip().lower()
     url = f"{UNSPLASH_BASE_URL}/search/photos"
     params = {
-        "query" : f"{city} cityscape panoramic wide angle modern daytime color photography skyline realistic",
+        "query" : f"{city}",
         "per_page": 1,
         "orientation": "landscape",
         "client_id": UNSPLASH_KEY,
@@ -229,7 +229,7 @@ def get_attraction_photo(attraction):
     attraction = attraction.strip().lower()
     url = f"{UNSPLASH_BASE_URL}/search/photos"
     params = {
-        "query" : f"{attraction} landmark full view wide angle daytime travel photography realistic",
+        "query" : f"{attraction}",
         "per_page": 1,
         "orientation": "landscape",
         "client_id": UNSPLASH_KEY,
