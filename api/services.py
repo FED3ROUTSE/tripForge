@@ -3,7 +3,7 @@ import json
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlencode
-from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS, COUNTRY_TO_LOCAL_CUISINE
+from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS, COUNTRY_TO_LOCAL_CUISINE, COUNTRY_ADJECTIVES
 
 load_dotenv()
 
@@ -152,6 +152,13 @@ def get_attractions(country):
 def get_local_cuisine(country):
     return COUNTRY_TO_LOCAL_CUISINE.get(country, [])
 
+def get_country_adjective(country: str):
+    if not country:
+        return None
+
+    return COUNTRY_ADJECTIVES.get(country.strip().lower())
+
+
 def get_photo_unsplash(query):
     
     url = f"{UNSPLASH_BASE_URL}/search/photos"
@@ -171,31 +178,49 @@ def get_photo_unsplash(query):
 
     return None
 
-def get_food_photo(food):
-    
+def get_food_photo(food, adjective=None):
     food = food.strip().lower()
-    url = f"{UNSPLASH_BASE_URL}/search/photos"
-    params = {
-        "query": f"{food}",
-        "per_page": 1,
-        "orientation": "landscape",
-        "client_id": UNSPLASH_KEY,
-    }
 
-    response = requests.get(url, params=params, timeout=5)
-    response.raise_for_status()
+    base_url = f"{UNSPLASH_BASE_URL}/search/photos"
 
-    data = response.json()
-    if data["results"]:
-        photo = data["results"][0]
-        return {
-        "url": photo["urls"]["regular"],
-        "author": photo["user"]["name"],
-        "username": photo["user"]["username"],
-        "link": photo["links"]["html"],
-    }
+    queries = [
+        f"{food}",                               
+        f"{food} food",                 
+        f"{adjective} {food}" if adjective else None,  
+        f"{adjective} traditional food" if adjective else None,
+        f"{food} traditional dish",              
+        f"traditional food",                        
+        f"local cuisine food",                       
+    ]
 
-    return print("Photo not found")
+    for query in queries:
+        if not query:
+            continue
+
+        params = {
+            "query": query,
+            "per_page": 1,
+            "orientation": "landscape",
+            "client_id": UNSPLASH_KEY,
+        }
+
+        response = requests.get(base_url, params=params, timeout=5)
+        response.raise_for_status()
+
+        data = response.json()
+        if data.get("results"):
+            photo = data["results"][0]
+            return {
+                "url": photo["urls"]["regular"],
+                "author": photo["user"]["name"],
+                "username": photo["user"]["username"],
+                "link": photo["links"]["html"],
+                "query_used": query,  # optional but VERY useful for debugging
+            }
+
+    # Absolute fallback
+    return None
+
 
 
 def get_city_photo(city):
@@ -220,9 +245,8 @@ def get_city_photo(city):
         "author": photo["user"]["name"],
         "username": photo["user"]["username"],
         "link": photo["links"]["html"],
-    }
-
-    return None
+    } 
+        return None
 
 def get_attraction_photo(attraction):
     

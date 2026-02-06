@@ -48,9 +48,18 @@ export default function TripSummary() {
   const navigate = useNavigate();
 
 
-const handleNext = (e) => {
-    navigate("/travel-style") 
-  }
+const handleNext = () => {
+  navigate("/travel-style", {
+    state: {
+      destination: state.destination,
+      arrival: state.arrival,
+      departure: state.departure,
+      budget: state.budget,
+      format_budget: state.format_budget,
+    },
+  });
+};
+
 
   const { state } = useLocation();
 

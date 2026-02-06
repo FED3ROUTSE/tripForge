@@ -267,3 +267,47 @@ COUNTRY_TO_LOCAL_CUISINE = {
 ],
 
 }
+
+
+COUNTRY_ADJECTIVES = {
+    "greece": "greek",
+    "italy": "italian",
+    "france": "french",
+    "spain": "spanish",
+    "portugal": "portuguese",
+    "germany": "german",
+    "austria": "austrian",
+    "switzerland": "swiss",
+    "united kingdom": "british",
+    "ireland": "irish",
+    "netherlands": "dutch",
+    "belgium": "belgian",
+
+    "united states": "american",
+    "canada": "canadian",
+    "mexico": "mexican",
+    "brazil": "brazilian",
+    "argentina": "argentinian",
+    "peru": "peruvian",
+    "colombia": "colombian",
+
+    "japan": "japanese",
+    "china": "chinese",
+    "south korea": "korean",
+    "india": "indian",
+    "thailand": "thai",
+    "vietnam": "vietnamese",
+    "indonesia": "indonesian",
+    "malaysia": "malaysian",
+
+    "turkey": "turkish",
+    "lebanon": "lebanese",
+    "israel": "israeli",
+    "egypt": "egyptian",
+    "morocco": "moroccan",
+    "tunisia": "tunisian",
+
+    "australia": "australian",
+    "new zealand": "new zealand",
+}
+

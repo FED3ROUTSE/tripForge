@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .services import (
     extract_trip_details, extract_travel_style, get_place_photo_google, get_city_map_url, get_photo_unsplash, get_city_photo,
     get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine,
-    get_attraction_photo, get_food_photo,)
+    get_attraction_photo, get_food_photo, get_country_adjective)
 from datetime import date
 from datetime import datetime
 import pandas as pd
@@ -74,6 +74,8 @@ def plan_trip(request):
             food_photos[food] = photo
         
     city_photo = get_city_photo(destination)
+    
+    adjective = get_country_adjective(country)
     
     print("City photo ULR", city_photo)
     print("Attractions photo ULR",attraction_photos)

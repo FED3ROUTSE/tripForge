@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { Coffee, Camera, Mountain, Utensils, PartyPopper } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export default function TravelStyle() {
   const navigate = useNavigate();
 
   const [selectedStyles, setSelectedStyles] = useState([]);
 
+  const { state } = useLocation();
+  const destination = state?.destination;
+  const arrival  = state?.arrival;
+  const departure = state?.departure;
+  const budget = state?.budget;
+  const format_budget = state?.format_budget;
 
   const styles = [
     {
@@ -52,10 +59,14 @@ export default function TravelStyle() {
   const [response, setResponse] = useState(null);
   const data = {
     travelStyle: selectedStyles,
+    destination: destination,
+    arrival: arrival,
+    departure: departure,
+    budget: budget,
+    format_budget: format_budget,
   }
 
   const handleContinue = async () => {
-    // Later you’ll pass selectedStyles to backend / next page
     try {
       const res = await fetch("http://127.0.0.1:8000/api/plan-style/", {
         method: "POST",
@@ -67,7 +78,8 @@ export default function TravelStyle() {
       state: json,
       
     });
-      console.log("Selected travel styles:", selectedStyles);
+
+      console.log("Data", data)
       setResponse(json);
     } catch (err) {
       console.error(err);
