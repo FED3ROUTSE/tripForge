@@ -24,6 +24,7 @@ def plan_trip(request):
     print("Budget:", budget)
     
     city_map = get_city_map_url(destination)
+    print("City map: ", city_map)
     photo_url = get_place_photo_google(destination)
     
     

@@ -74,7 +74,7 @@ export default function TravelStyle() {
         body: JSON.stringify(data),
       });
       const json = await res.json();
-      navigate("", {
+      navigate("/travel-plan", {
       state: json,
       
     });
