@@ -105,8 +105,41 @@ def plan_style(request):
     
     data = request.data
     travel_style = extract_travel_style(data)
+    trip_details = extract_trip_details(data)
+    destination = trip_details.get("destination")
+    arrival = trip_details.get("arrival")
+    departure = trip_details.get("departure")
+    budget = trip_details.get("budget")
+    print("Destination:", destination)
+    print("Arrival:", arrival)
+    print("Departure:", departure)
+    print("Budget:", budget)
+    
+    d1 = datetime.strptime(departure, "%Y-%m-%d")
+    d2 = datetime.strptime(arrival, "%Y-%m-%d")
+    duration_days = (d1-d2).days
+    print("Duration in days:", duration_days)
+    
+    daily_budget = budget/duration_days
+    format_budget = f"{daily_budget:.2f}"
+    
+        
+    day = list(range(1, duration_days + 1))
+    
+    print("Days: ", day)
     print("Travel Style:", travel_style)
+    
+    
     return Response({
+        "success": True,
+        "travel_style": travel_style,
+        "destination": destination,
+        "arrival": arrival,
+        "departure": departure,
+        "day": day,
+        "budget": budget,
+        "duration_days": duration_days,
+        "format_budget": format_budget,
         
     })
     
