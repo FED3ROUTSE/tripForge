@@ -49,6 +49,107 @@ landmark = {
     "bangkok": "Wat Arun best view",
 }
 
+def geocoding(destination):
+    normalized_destination = destination.lower().strip()
+
+    url = "https://maps.googleapis.com/maps/api/geocode/json"
+
+    params = {
+        "address": normalized_destination,
+        "key": API_KEY
+    }
+
+    response = requests.get(url, params=params, timeout=5)
+    response.raise_for_status()
+
+    data = response.json()
+    results = data.get("results", [])
+
+    if not results:
+        print("Destination not found!")
+        return None
+
+    location = results[0]["geometry"]["location"]
+
+    if data.get("status") != "OK":
+        print("Geocoding failed:", data.get("status"))
+        return None
+
+    return {
+        "lat": location["lat"],
+        "lng": location["lng"]
+    }
+    
+    
+def nearby_search(type, coordinations, radius):
+    
+    location = f"{coordinations['lat']},{coordinations['lng']}"
+
+    url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+    params = {
+        "location": location,
+        "radius": radius,
+        "type": type,
+        "key": API_KEY
+    }
+
+    res = requests.get(url, params=params).json()
+
+    results = res.get("results", [])
+    print("Status:", res["status"])
+    print("Results:", len(results))
+    
+    filtered = []
+    
+    for p in results:
+        types = p.get("types", [])
+        
+        if "fast_food_restaurant" in types or "meal_takeaway" in types:
+            continue
+        
+        if "equipment" in types or "hotel" in types:
+            continue
+        
+        filtered.append(p)
+        
+    sorted_best = sorted(filtered, key=lambda x: x.get("rating", 0), reverse=True)
+
+
+def nearby_search_refined(place_type, coordinations, radius=1000):
+    url = "https://places.googleapis.com/v1/places:searchNearby"
+
+    payload = {
+        "includedPrimaryTypes": [place_type],
+        "excludedTypes": ["fast_food_restaurant", "coffee_shop", "coffee_stand"],
+        "locationRestriction": {
+            "circle": {
+                "center": {
+                    "latitude": coordinations['lat'],
+                    "longitude": coordinations['lng']
+                },
+                "radius": radius
+            }
+        }
+    }
+
+    headers = {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": API_KEY,
+        "X-Goog-FieldMask": "*"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    res_data = response.json()
+
+    print("FULL RESPONSE:")
+    print(res_data)
+
+    return res_data
+
+
+    
+    
+
 def get_place_photo_google(place):
     
     normalized_place = place.lower().strip()

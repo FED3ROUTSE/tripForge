@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from .services import (
     extract_trip_details, extract_travel_style, get_place_photo_google, get_city_map_url, get_photo_unsplash, get_city_photo,
     get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine,
-    get_attraction_photo, get_food_photo, get_country_adjective)
+    get_attraction_photo, get_food_photo, get_country_adjective, geocoding, nearby_search)
 from datetime import date
 from datetime import datetime
 import pandas as pd
@@ -128,6 +128,8 @@ def plan_style(request):
     
     print("Days: ", day)
     print("Travel Style:", travel_style)
+    
+    coordinates = geocoding(destination)
     
     
     return Response({
