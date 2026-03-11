@@ -3,7 +3,8 @@ import json
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlencode
-from .data.city_data import CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS, COUNTRY_TO_LOCAL_CUISINE, COUNTRY_ADJECTIVES
+from .data.city_data import (CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS,
+                             COUNTRY_TO_LOCAL_CUISINE, COUNTRY_ADJECTIVES, STYLE_TO_TYPES, SPENDING_TO_PRICE, style_adjustments)
 
 load_dotenv()
 
@@ -47,6 +48,15 @@ landmark = {
     "dublin": "Ha'penny Bridge best view",
     "kuala lumpur": "Petronas Twin Towers best view",
     "bangkok": "Wat Arun best view",
+}
+
+
+base_distribution = {
+    "breakfast": 0.15,
+    "lunch": 0.25,
+    "activity": 0.30,
+    "dinner": 0.25,
+    "nightlife": 0.05
 }
 
 def geocoding(destination):
@@ -115,11 +125,14 @@ def nearby_search(type, coordinations, radius):
     sorted_best = sorted(filtered, key=lambda x: x.get("rating", 0), reverse=True)
 
 
-def nearby_search_refined(place_type, coordinations, radius=1000):
+def nearby_search_refined(spending_style, travel_style, coordinations, radius=1000):
     url = "https://places.googleapis.com/v1/places:searchNearby"
+    price = SPENDING_TO_PRICE(spending_style)
+    style = STYLE_TO_TYPES(travel_style)
 
+    
     payload = {
-        "includedPrimaryTypes": [place_type],
+        "includedPrimaryTypes": [],
         "excludedTypes": ["fast_food_restaurant", "coffee_shop", "coffee_stand"],
         "locationRestriction": {
             "circle": {
@@ -140,11 +153,13 @@ def nearby_search_refined(place_type, coordinations, radius=1000):
 
     response = requests.post(url, json=payload, headers=headers)
     res_data = response.json()
+    places = res_data.get("places", [])
 
-    print("FULL RESPONSE:")
-    print(res_data)
+    
+    sorted_best = sorted(places, key=lambda x: x.get("rating", 0), reverse=True)
+    best = sorted_best[0]
 
-    return res_data
+    return best
 
 
     
@@ -228,6 +243,13 @@ def extract_travel_style(data):
     
     return {
         "travel_style": travel_style,
+    }
+    
+def extract_spending_style(data):
+    spendingStyle = data.get("spendingStyle")
+    
+    return{
+        "spendingStyle": spendingStyle
     }
     
     
@@ -374,3 +396,23 @@ def get_attraction_photo(attraction):
     }
 
     return None
+
+def calculate_distribution(selected_styles):
+
+    distribution = base_distribution.copy()
+
+    for style in selected_styles:
+        if style in style_adjustments:
+            for key, value in style_adjustments[style].items():
+                distribution[key] += value
+
+    return distribution
+
+
+def normalize_distribution(distribution):
+    total = sum(distribution.values())
+
+    for key in distribution:
+        distribution[key] = distribution[key] / total
+
+    return distribution

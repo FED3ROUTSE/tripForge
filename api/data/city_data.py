@@ -311,3 +311,68 @@ COUNTRY_ADJECTIVES = {
     "new zealand": "new zealand",
 }
 
+
+STYLE_TO_TYPES = {
+    "relaxed": ["cafe", "park"],
+    "sightseeing": ["tourist_attraction", "museum"],
+    "adventure": ["hiking_area", "natural_feature"],
+    "food": ["restaurant"],
+    "nightlife": ["bar", "night_club"]
+}
+
+SPENDING_TO_PRICE = {
+    "budget": [
+        "PRICE_LEVEL_FREE",
+        "PRICE_LEVEL_INEXPENSIVE"
+    ],
+
+    "balanced": [
+        "PRICE_LEVEL_INEXPENSIVE",
+        "PRICE_LEVEL_MODERATE"
+    ],
+
+    "premium": [
+        "PRICE_LEVEL_MODERATE",
+        "PRICE_LEVEL_EXPENSIVE"
+    ],
+
+    "luxury": [
+        "PRICE_LEVEL_EXPENSIVE",
+        "PRICE_LEVEL_VERY_EXPENSIVE"
+    ]
+}
+
+
+style_adjustments = {
+
+    "relaxed": {
+        "breakfast": +0.05,
+        "activity": -0.05
+    },
+
+    "sightseeing": {
+        "activity": +0.10,
+        "lunch": -0.05,
+        "nightlife": -0.05
+    },
+
+    "adventure": {
+        "activity": +0.15,
+        "dinner": -0.05,
+        "nightlife": -0.10
+    },
+
+    "food": {
+        "breakfast": +0.05,
+        "lunch": +0.05,
+        "dinner": +0.05,
+        "activity": -0.10
+    },
+
+    "nightlife": {
+        "nightlife": +0.20,
+        "breakfast": -0.05,
+        "activity": -0.05,
+        "dinner": -0.10
+    }
+}
