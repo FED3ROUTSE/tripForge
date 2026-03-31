@@ -125,43 +125,6 @@ def nearby_search(type, coordinations, radius):
     sorted_best = sorted(filtered, key=lambda x: x.get("rating", 0), reverse=True)
 
 
-def nearby_search_refined(spending_style, travel_style, coordinations, radius=1000):
-    url = "https://places.googleapis.com/v1/places:searchNearby"
-    price = SPENDING_TO_PRICE(spending_style)
-    style = STYLE_TO_TYPES(travel_style)
-
-    
-    payload = {
-        "includedPrimaryTypes": [],
-        "excludedTypes": ["fast_food_restaurant", "coffee_shop", "coffee_stand"],
-        "locationRestriction": {
-            "circle": {
-                "center": {
-                    "latitude": coordinations['lat'],
-                    "longitude": coordinations['lng']
-                },
-                "radius": radius
-            }
-        }
-    }
-
-    headers = {
-        "Content-Type": "application/json",
-        "X-Goog-Api-Key": API_KEY,
-        "X-Goog-FieldMask": "*"
-    }
-
-    response = requests.post(url, json=payload, headers=headers)
-    res_data = response.json()
-    places = res_data.get("places", [])
-
-    
-    sorted_best = sorted(places, key=lambda x: x.get("rating", 0), reverse=True)
-    best = sorted_best[0]
-
-    return best
-
-
     
     
 
@@ -416,3 +379,50 @@ def normalize_distribution(distribution):
         distribution[key] = distribution[key] / total
 
     return distribution
+
+def calculate_budget(normalized_distribution, daily_budget):
+
+    return {
+        category: round(weight * float(daily_budget), 2)
+        for category, weight in normalized_distribution.items()
+    }
+
+
+def nearby_search_refined(spending_style, travel_style, coordinations, radius=1000):
+    url = "https://places.googleapis.com/v1/places:searchNearby"
+    price = SPENDING_TO_PRICE(spending_style)
+    style = STYLE_TO_TYPES(travel_style)
+    
+    distribution = calculate_distribution(price)
+    distribution = normalize_distribution(distribution)
+
+    
+    payload = {
+        "includedPrimaryTypes": [],
+        "excludedTypes": ["fast_food_restaurant", "coffee_shop", "coffee_stand"],
+        "locationRestriction": {
+            "circle": {
+                "center": {
+                    "latitude": coordinations['lat'],
+                    "longitude": coordinations['lng']
+                },
+                "radius": radius
+            }
+        }
+    }
+
+    headers = {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": API_KEY,
+        "X-Goog-FieldMask": "*"
+    }
+
+    response = requests.post(url, json=payload, headers=headers)
+    res_data = response.json()
+    places = res_data.get("places", [])
+
+    
+    sorted_best = sorted(places, key=lambda x: x.get("rating", 0), reverse=True)
+    best = sorted_best[0]
+
+    return best
