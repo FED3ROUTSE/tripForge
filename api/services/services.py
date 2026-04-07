@@ -3,7 +3,7 @@ import json
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlencode
-from .data.city_data import (CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS,
+from ..data.city_data import (CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS,
                              COUNTRY_TO_LOCAL_CUISINE, COUNTRY_ADJECTIVES, STYLE_TO_TYPES, SPENDING_TO_PRICE, style_adjustments)
 
 load_dotenv()
