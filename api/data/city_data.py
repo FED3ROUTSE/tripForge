@@ -320,27 +320,6 @@ STYLE_TO_TYPES = {
     "nightlife": ["bar", "night_club"]
 }
 
-SPENDING_TO_PRICE = {
-    "budget": [
-        "PRICE_LEVEL_FREE",
-        "PRICE_LEVEL_INEXPENSIVE"
-    ],
-
-    "balanced": [
-        "PRICE_LEVEL_INEXPENSIVE",
-        "PRICE_LEVEL_MODERATE"
-    ],
-
-    "premium": [
-        "PRICE_LEVEL_MODERATE",
-        "PRICE_LEVEL_EXPENSIVE"
-    ],
-
-    "luxury": [
-        "PRICE_LEVEL_EXPENSIVE",
-        "PRICE_LEVEL_VERY_EXPENSIVE"
-    ]
-}
 
 
 style_adjustments = {
@@ -403,7 +382,7 @@ WEIGHTS_DISTRIBUTION = {
         "s": 0.35
     },
     
-    "food focused": {
+    "food": {
         "p": 0.2,
         "d": 0.15,
         "r": 0.40,
@@ -418,4 +397,46 @@ WEIGHTS_DISTRIBUTION = {
         "n": 0.15,
         "s": 0.25
     }
+}
+
+
+
+SPENDING_MODS = {
+    "budget": {
+        "p": +0.20,      
+        "others": -0.05  
+    },
+    "balanced": {
+        "p": 0.00, 
+        "others": 0.00
+    },
+
+    "premium":  {
+        "p": -0.10, 
+        "r": 0.10
+    },
+
+    "luxury": {
+        "p": -0.15,      
+        "r": +0.10,      
+        "s": +0.05       
+    }
+}
+
+
+
+GOOGLE_PRICE_MAP = {
+    "PRICE_LEVEL_FREE": 0,
+    "PRICE_LEVEL_INEXPENSIVE": 1,
+    "PRICE_LEVEL_MODERATE": 2,
+    "PRICE_LEVEL_EXPENSIVE": 3,
+    "PRICE_LEVEL_VERY_EXPENSIVE": 4
+}
+
+
+IDEAL_PRICE_MAP = {
+    "budget": 1,   
+    "balanced": 2,  
+    "premium": 3,   
+    "luxury": 4     
 }

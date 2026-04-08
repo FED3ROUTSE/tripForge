@@ -4,7 +4,8 @@ import os
 from dotenv import load_dotenv
 from urllib.parse import urlencode
 from ..data.city_data import (CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS,
-                             COUNTRY_TO_LOCAL_CUISINE, COUNTRY_ADJECTIVES, STYLE_TO_TYPES, SPENDING_TO_PRICE, style_adjustments)
+                             COUNTRY_TO_LOCAL_CUISINE, COUNTRY_ADJECTIVES, STYLE_TO_TYPES, SPENDING_TO_PRICE, style_adjustments, WEIGHTS_DISTRIBUTION,
+                             SPENDING_MODS,)
 
 load_dotenv()
 
@@ -426,3 +427,30 @@ def nearby_search_refined(spending_style, travel_style, coordinations, radius=10
     best = sorted_best[0]
 
     return best
+
+
+def get_active_weights(selected_style_ids, spending_id):
+
+    if isinstance(selected_style_ids, str):
+        selected_style_ids = [selected_style_ids]
+
+    active = {"p": 0, "d": 0, "r": 0, "n": 0, "s": 0,}
+    count = len(selected_style_ids)
+
+    for style_id in selected_style_ids:
+        style_row = WEIGHTS_DISTRIBUTION[style_id]
+        for key in active:
+            active[key] += style_row[key] / count
+
+    mod = SPENDING_MODS.get(spending_id, SPENDING_MODS["balanced"])#
+
+    if spending_id == "budget":
+        active["p"] += mod["p"]
+        for key in ["d", "r", "n", "s"]:
+            active[key] += mod["others"]
+    else:
+        for key, value in mod.items():
+            active[key] += value
+
+
+    return {k: max(0, v) for k, v in active.items()}
