@@ -313,11 +313,25 @@ COUNTRY_ADJECTIVES = {
 
 
 STYLE_TO_TYPES = {
-    "relaxed": ["cafe", "park"],
-    "sightseeing": ["tourist_attraction", "museum"],
-    "adventure": ["hiking_area", "natural_feature"],
-    "food": ["restaurant"],
-    "nightlife": ["bar", "night_club"]
+    "relaxed": [
+        "cafe", "park", "spa", "library", "book_store", "aquarium", 
+        "art_gallery", "botanical_garden", "movie_theater", "museum"
+    ],
+    "sightseeing": [
+        "tourist_attraction", "museum", "church", "place_of_worship", 
+        "hindu_temple", "synagogue", "mosque", "city_hall", "historical_landmark"
+    ],
+    "adventure": [
+        "hiking_area", "natural_feature", "campground", "amusement_park", 
+        "zoo", "stadium", "national_park", "adventure_sports_center"
+    ],
+    "food": [
+        "restaurant", "bakery", "cafe", "meal_takeaway", "meal_delivery", 
+        "liquor_store", "supermarket", "bar"
+    ],
+    "nightlife": [
+        "bar", "night_club", "casino", "bowling_alley", "comedy_club", "liquor_store"
+    ]
 }
 
 
