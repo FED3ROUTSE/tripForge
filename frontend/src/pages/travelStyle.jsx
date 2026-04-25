@@ -118,7 +118,7 @@ export default function TravelStyle() {
       });
 
       const json = await res.json();
-
+      console.log("Data:", data)
       navigate("/travel-plan", {
         state: json,
       });

@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from .services.services import (
     extract_trip_details, extract_travel_style, get_place_photo_google, get_city_map_url, get_photo_unsplash, get_city_photo,
     get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine,
-    get_attraction_photo, get_food_photo, get_country_adjective, geocoding, nearby_search, extract_spending_style, calculate_distribution,
-    normalize_distribution, calculate_budget)
+    get_attraction_photo, get_food_photo, get_country_adjective, geocoding, nearby_search, extract_spending_style,
+    calculate_budget)
 from datetime import date
 from datetime import datetime
 import pandas as pd
@@ -132,14 +132,23 @@ def plan_style(request):
     print("Travel Style:", travel_style)
     print("Spending Style:", spendingStyle)
 
-    coordinates = geocoding(destination)
+    hotel = ""
+    if hotel:
+        coordinates = geocoding(hotel)
+        lat = coordinates.get("lat")
+        lng = coordinates.get("lng")
+    else:
+        coordinates = geocoding(destination)
+        lat = coordinates.get("lat")
+        lng = coordinates.get("lng")
+        
     
-    distribution = calculate_distribution(travel_style)
-    normalized_distribution = normalize_distribution(distribution)
-    category_budget = calculate_budget(normalized_distribution, format_budget)
-    
-    print("Category Budget:", category_budget)
-    print("Normalized Distribution:", normalized_distribution)
+    user_prefs = {
+        "spending_style": spendingStyle,
+        "travel_style": travel_style,
+        "lat": lat,
+        "lng": lng,
+    }
     
     return Response({
         "success": True,

@@ -4,7 +4,7 @@ import os
 from dotenv import load_dotenv
 from urllib.parse import urlencode
 from ..data.city_data import (CITY_TO_COUNTRY, COUNTRY_TO_CURRENCY, COUNTRY_TO_PEAK_SEASON, COUNTRY_TO_POPULAR_ATTRACTIONS,
-                             COUNTRY_TO_LOCAL_CUISINE, COUNTRY_ADJECTIVES, STYLE_TO_TYPES, SPENDING_TO_PRICE, style_adjustments, WEIGHTS_DISTRIBUTION,
+                             COUNTRY_TO_LOCAL_CUISINE, COUNTRY_ADJECTIVES, STYLE_TO_TYPES, style_adjustments, WEIGHTS_DISTRIBUTION,
                              SPENDING_MODS,)
 
 load_dotenv()
@@ -361,25 +361,6 @@ def get_attraction_photo(attraction):
 
     return None
 
-def calculate_distribution(selected_styles):
-
-    distribution = base_distribution.copy()
-
-    for style in selected_styles:
-        if style in style_adjustments:
-            for key, value in style_adjustments[style].items():
-                distribution[key] += value
-
-    return distribution
-
-
-def normalize_distribution(distribution):
-    total = sum(distribution.values())
-
-    for key in distribution:
-        distribution[key] = distribution[key] / total
-
-    return distribution
 
 def calculate_budget(normalized_distribution, daily_budget):
 
@@ -391,11 +372,8 @@ def calculate_budget(normalized_distribution, daily_budget):
 
 def nearby_search_refined(spending_style, travel_style, coordinations, radius=1000):
     url = "https://places.googleapis.com/v1/places:searchNearby"
-    price = SPENDING_TO_PRICE(spending_style)
-    style = STYLE_TO_TYPES(travel_style)
+ 
     
-    distribution = calculate_distribution(price)
-    distribution = normalize_distribution(distribution)
 
     
     payload = {
