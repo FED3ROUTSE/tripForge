@@ -1,4 +1,4 @@
-from ..data.city_data import GOOGLE_PRICE_MAP, IDEAL_PRICE_MAP
+from ..data.city_data import GOOGLE_PRICE_MAP, IDEAL_PRICE_MAP, STYLE_TO_TYPES
 import math
 
 def normalize_price(google_price_string, user_spending_style):
@@ -61,5 +61,12 @@ def normalize_popularity(review_count):
 
     return score
 
-def style_match(activity_style, user_style):
-    return None 
+def normalize_style_match(google_place_types, user_styles):
+    styles = STYLE_TO_TYPES
+
+    for style in user_styles:
+        track = styles.get(style, [])
+        for place_type in google_place_types:
+            if place_type in track:
+                return 1.0
+    return 0.0
