@@ -407,28 +407,26 @@ def nearby_search_refined(spending_style, travel_style, coordinations, radius=10
     return best
 
 
-def get_active_weights(selected_style_ids, spending_id):
+def get_active_weights(travel_style, spending_style):
 
-    if isinstance(selected_style_ids, str):
-        selected_style_ids = [selected_style_ids]
+    if isinstance(travel_style, str):
+        travel_style = [travel_style]
 
     active = {"p": 0, "d": 0, "r": 0, "n": 0, "s": 0,}
-    count = len(selected_style_ids)
+    count = len(travel_style)
 
-    for style_id in selected_style_ids:
+    for style_id in travel_style:
         style_row = WEIGHTS_DISTRIBUTION[style_id]
         for key in active:
             active[key] += style_row[key] / count
 
-    mod = SPENDING_MODS.get(spending_id, SPENDING_MODS["balanced"])#
+    mod = SPENDING_MODS.get(spending_style, SPENDING_MODS["balanced"])#
 
-    if spending_id == "budget":
-        active["p"] += mod["p"]
-        for key in ["d", "r", "n", "s"]:
-            active[key] += mod["others"]
-    else:
-        for key, value in mod.items():
+    for key, value in mod.items():
+        if key == "others":
+            for k in ["d", "r", "n", "s"]:
+                active[k] += value
+        else:
             active[key] += value
-
 
     return {k: max(0, v) for k, v in active.items()}
