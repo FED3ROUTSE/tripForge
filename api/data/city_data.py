@@ -2,6 +2,45 @@
 # CITY → COUNTRY
 # =======================
 
+LANDMARK = {
+    "paris": "Eiffel Tower",
+    "bucharest": "the Palace of Parliament of Bucharest",
+    "rome": "Colosseum of rome best picture",
+    "london": "Big ben best picture",
+    "new york": "Statue of Liberty best view",
+    "sydney": "Sydney Opera House best view",
+    "dubai": "Burj Khalifa best view",
+    "tokyo": "Tokyo Skytree best view",
+    "san francisco": "Golden Gate Bridge best view",
+    "rio de janeiro": "Christ the Redeemer best view",
+    "athens": "Acropolis of Athens best view",
+    "beijing": "Forbidden City best view",
+    "berlin": "A high-resolution, ultra-sharp daytime photograph of the Brandenburg Gate in Berlin. Clear blue sky, natural sunlight, wide-angle view from the front, people walking around, realistic colors and detailed architecture.",
+    "cairo": "Pyramids of Giza best view",
+    "istanbul": "A high-resolution, ultra-sharp nighttime panoramic photograph of the Hagia Sophia Grand Mosque in Istanbul, beautifully illuminated with warm golden lights. Wide angle view, clear sky, vibrant reflections, dramatic contrast, professional architectural photography.",
+    "lisbon": "Belém Tower best view",
+    "moscow": "Saint Basil's Cathedral of Moscow, best picture",
+    "new delhi": "India Gate in new delhi best picture",
+    "prague": "Charles Bridge best view",
+    "seoul": "Gyeongbokgung Palace best view",
+    "shanghai": "The Bund best view",
+    "singapore": "Marina Bay Sands best view",
+    "st. petersburg": "The Hermitage Museum best view",
+    "washington d.c.": "United States Capitol Building best view",
+    "vienna": "Schönbrunn Palace best view",
+    "amsterdam": "Rijksmuseum best view",
+    "madrid": "Plaza Mayor, Madrid best view",
+    "budapest": "Hungarian Parliament Building best view",
+    "hanoi": "Hanoi Opera House best view",
+    "mexico city": "Ángel de la Independencia best view",
+    "toronto": "CN Tower best view",
+    "los angeles": "Hollywood Sign best view",
+    "dublin": "Ha'penny Bridge best view",
+    "kuala lumpur": "Petronas Twin Towers best view",
+    "bangkok": "Wat Arun best view",
+}
+
+
 CITY_TO_COUNTRY = {
     # Original
     "paris": "france",

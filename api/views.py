@@ -2,10 +2,12 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .services.services import (
-    extract_trip_details, extract_travel_style, get_place_photo_google, get_city_map_url, get_photo_unsplash, get_city_photo,
-    get_currencies, get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine,
-    get_attraction_photo, get_food_photo, get_country_adjective, geocoding, nearby_search, extract_spending_style,
-    calculate_budget)
+    extract_trip_details, extract_travel_style,get_currencies, 
+    get_country, get_peak_season, is_month_in_range, get_attractions, get_local_cuisine,
+    get_country_adjective, extract_spending_style, get_google_types)
+
+from .services.api_utilisation import (get_place_photo_google,  get_city_map_url, get_city_photo,
+    get_attraction_photo, get_food_photo, geocoding, nearby_search_refined,)
 from datetime import date
 from datetime import datetime
 import pandas as pd
@@ -82,7 +84,6 @@ def plan_trip(request):
     print("City photo ULR", city_photo)
     print("Attractions photo ULR",attraction_photos)
     print("Food photo ULR",food_photos)
-
     
     
     return Response({
@@ -149,6 +150,10 @@ def plan_style(request):
         "lat": lat,
         "lng": lng,
     }
+    
+    google_types = get_google_types(travel_style)
+    
+    
     
     return Response({
         "success": True,
